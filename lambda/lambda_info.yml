@@ -1,0 +1,22 @@
+---
+# Simple example of listing all info for a function
+- name: List all for a specific function
+  lambda_info:
+    query: all
+    function_name: myFunction
+  register: my_function_details
+# List all versions of a function
+- name: List function versions
+  lambda_info:
+    query: versions
+    function_name: myFunction
+  register: my_function_versions
+# List all lambda function versions
+- name: List all function
+  lambda_info:
+    query: all
+    max_items: 20
+  register: output
+- name: show Lambda information
+  debug:
+    msg: "{{ output['function'] }}"

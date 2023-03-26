@@ -1,0 +1,50 @@
+# Note: These examples do not set authentication details, see the AWS Guide for details.
+
+# Create step scaling policy for ECS Service
+- name: scaling_policy
+  aws_application_scaling_policy:
+    state: present
+    policy_name: test_policy
+    service_namespace: ecs
+    resource_id: service/poc-pricing/test-as
+    scalable_dimension: ecs:service:DesiredCount
+    policy_type: StepScaling
+    minimum_tasks: 1
+    maximum_tasks: 6
+    step_scaling_policy_configuration:
+      AdjustmentType: ChangeInCapacity
+      StepAdjustments:
+        - MetricIntervalUpperBound: 123
+          ScalingAdjustment: 2
+        - MetricIntervalLowerBound: 123
+          ScalingAdjustment: -2
+      Cooldown: 123
+      MetricAggregationType: Average
+
+# Create target tracking scaling policy for ECS Service
+- name: scaling_policy
+  aws_application_scaling_policy:
+    state: present
+    policy_name: test_policy
+    service_namespace: ecs
+    resource_id: service/poc-pricing/test-as
+    scalable_dimension: ecs:service:DesiredCount
+    policy_type: TargetTrackingScaling
+    minimum_tasks: 1
+    maximum_tasks: 6
+    target_tracking_scaling_policy_configuration:
+      TargetValue: 60
+      PredefinedMetricSpecification:
+        PredefinedMetricType: ECSServiceAverageCPUUtilization
+      ScaleOutCooldown: 60
+      ScaleInCooldown: 60
+
+# Remove scalable target for ECS Service
+- name: scaling_policy
+  aws_application_scaling_policy:
+    state: absent
+    policy_name: test_policy
+    policy_type: StepScaling
+    service_namespace: ecs
+    resource_id: service/cluster-name/service-name
+    scalable_dimension: ecs:service:DesiredCount

@@ -1,0 +1,34 @@
+# Note: These examples do not set authentication details, see the AWS Guide for details.
+
+# Create an ELB and attach a listener
+- elb_network_lb:
+    name: myelb
+    subnets:
+      - subnet-012345678
+      - subnet-abcdef000
+    listeners:
+      - Protocol: TCP # Required. The protocol for connections from clients to the load balancer (TCP or TLS) (case-sensitive).
+        Port: 80 # Required. The port on which the load balancer is listening.
+        DefaultActions:
+          - Type: forward # Required. Only 'forward' is accepted at this time
+            TargetGroupName: mytargetgroup # Required. The name of the target group
+    state: present
+
+# Create an ELB with an attached Elastic IP address
+- elb_network_lb:
+    name: myelb
+    subnet_mappings:
+      - SubnetId: subnet-012345678
+        AllocationId: eipalloc-aabbccdd
+    listeners:
+      - Protocol: TCP # Required. The protocol for connections from clients to the load balancer (TCP or TLS) (case-sensitive).
+        Port: 80 # Required. The port on which the load balancer is listening.
+        DefaultActions:
+          - Type: forward # Required. Only 'forward' is accepted at this time
+            TargetGroupName: mytargetgroup # Required. The name of the target group
+    state: present
+
+# Remove an ELB
+- elb_network_lb:
+    name: myelb
+    state: absent

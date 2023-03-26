@@ -1,0 +1,9 @@
+# Create snapshot
+- rds_snapshot:
+    db_instance_identifier: new-database
+    db_snapshot_identifier: new-database-snapshot
+
+# Delete snapshot
+- rds_snapshot:
+    db_snapshot_identifier: new-database-snapshot
+    state: absent

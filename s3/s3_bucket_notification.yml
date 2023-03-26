@@ -1,0 +1,14 @@
+---
+# Example that creates a lambda event notification for a bucket
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: Process jpg image
+    s3_bucket_notification:
+      state: present
+      event_name: on_file_add_or_remove
+      bucket_name: test-bucket
+      function_name: arn:aws:lambda:us-east-2:526810320200:function:test-lambda
+      events: ["s3:ObjectCreated:*", "s3:ObjectRemoved:*"]
+      prefix: images/
+      suffix: .jpg

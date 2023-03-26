@@ -1,0 +1,91 @@
+# Note: These examples do not set authentication details, see the AWS Guide for details.
+
+# Create a target group with a default health check
+- elb_target_group:
+    name: mytargetgroup
+    protocol: http
+    port: 80
+    vpc_id: vpc-01234567
+    state: present
+
+# Modify the target group with a custom health check
+- elb_target_group:
+    name: mytargetgroup
+    protocol: http
+    port: 80
+    vpc_id: vpc-01234567
+    health_check_path: /
+    successful_response_codes: "200,250-260"
+    state: present
+
+# Delete a target group
+- elb_target_group:
+    name: mytargetgroup
+    state: absent
+
+# Create a target group with instance targets
+- elb_target_group:
+    name: mytargetgroup
+    protocol: http
+    port: 81
+    vpc_id: vpc-01234567
+    health_check_path: /
+    successful_response_codes: "200,250-260"
+    targets:
+      - Id: i-01234567
+        Port: 80
+      - Id: i-98765432
+        Port: 80
+    state: present
+    wait_timeout: 200
+    wait: True
+
+# Create a target group with IP address targets
+- elb_target_group:
+    name: mytargetgroup
+    protocol: http
+    port: 81
+    vpc_id: vpc-01234567
+    health_check_path: /
+    successful_response_codes: "200,250-260"
+    target_type: ip
+    targets:
+      - Id: 10.0.0.10
+        Port: 80
+        AvailabilityZone: all
+      - Id: 10.0.0.20
+        Port: 80
+    state: present
+    wait_timeout: 200
+    wait: True
+
+# Using lambda as targets require that the target group
+# itself is allow to invoke the lambda function.
+# therefore you need first to create an empty target group
+# to receive its arn, second, allow the target group
+# to invoke the lamba function and third, add the target
+# to the target group
+- name: first, create empty target group
+  elb_target_group:
+    name: my-lambda-targetgroup
+    target_type: lambda
+    state: present
+    modify_targets: False
+  register: out
+
+- name: second, allow invoke of the lambda
+  lambda_policy:
+    state: "{{ state | default('present') }}"
+    function_name: my-lambda-function
+    statement_id: someID
+    action: lambda:InvokeFunction
+    principal: elasticloadbalancing.amazonaws.com
+    source_arn: "{{ out.target_group_arn }}"
+
+- name: third, add target
+  elb_target_group:
+    name: my-lambda-targetgroup
+    target_type: lambda
+    state: present
+    targets:
+        - Id: arn:aws:lambda:eu-central-1:123456789012:function:my-lambda-function

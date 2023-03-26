@@ -1,0 +1,11 @@
+# find all existing IAM roles
+- iam_role_info:
+  register: result
+
+# describe a single role
+- iam_role_info:
+    name: MyIAMRole
+
+# describe all roles matching a path prefix
+- iam_role_info:
+    path_prefix: /application/path

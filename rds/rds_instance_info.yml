@@ -1,0 +1,7 @@
+# Get information about an instance
+- rds_instance_info:
+    db_instance_identifier: new-database
+  register: new_database_info
+
+# Get all RDS instances
+- rds_instance_info:

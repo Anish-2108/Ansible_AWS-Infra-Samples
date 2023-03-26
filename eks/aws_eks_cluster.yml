@@ -1,0 +1,19 @@
+# Note: These examples do not set authentication details, see the AWS Guide for details.
+
+- name: Create an EKS cluster
+  aws_eks_cluster:
+    name: my_cluster
+    version: v1.10.0
+    role_arn: my_eks_role
+    subnets:
+      - subnet-aaaa1111
+    security_groups:
+      - my_eks_sg
+      - sg-abcd1234
+  register: caller_facts
+
+- name: Remove an EKS cluster
+  aws_eks_cluster:
+    name: my_cluster
+    wait: yes
+    state: absent

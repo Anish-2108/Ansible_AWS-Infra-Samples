@@ -1,0 +1,6 @@
+- name: obtain all Elasticache information
+  elasticache_info:
+
+- name: obtain all information for a single Elasticache cluster
+  elasticache_info:
+    name: test_elasticache
