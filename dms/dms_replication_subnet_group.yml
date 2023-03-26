@@ -1,0 +1,5 @@
+- dms_replication_subnet_group:
+    state: present
+    identifier: "dev-sngroup"
+    description: "Development Subnet Group asdasdas"
+    subnet_ids: ['subnet-id1','subnet-id2']

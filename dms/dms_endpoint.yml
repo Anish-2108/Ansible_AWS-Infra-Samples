@@ -1,0 +1,14 @@
+# Note: These examples do not set authentication details
+# Endpoint Creation
+- dms_endpoint:
+    state: absent
+    endpointidentifier: 'testsource'
+    endpointtype: source
+    enginename: aurora
+    username: testing1
+    password: testint1234
+    servername: testing.domain.com
+    port: 3306
+    databasename: 'testdb'
+    sslmode: none
+    wait: false
