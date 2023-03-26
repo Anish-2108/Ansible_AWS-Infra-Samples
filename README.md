@@ -1,6 +1,6 @@
 # Ansible_AWS-Infra-Samples
 
-# Using the AWS CLI to Connect Ansible
+**Using the AWS CLI to Connect Ansible**
 
 sudo apt update sudo apt install python3-pip pip3 install awscli
 
