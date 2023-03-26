@@ -1,0 +1,36 @@
+- name: Create a stack set with instances in two accounts
+  cloudformation_stack_set:
+    name: my-stack
+    description: Test stack in two accounts
+    state: present
+    template_url: https://s3.amazonaws.com/my-bucket/cloudformation.template
+    accounts: [1234567890, 2345678901]
+    regions:
+    - us-east-1
+
+- name: on subsequent calls, templates are optional but parameters and tags can be altered
+  cloudformation_stack_set:
+    name: my-stack
+    state: present
+    parameters:
+      InstanceName: my_stacked_instance
+    tags:
+      foo: bar
+      test: stack
+    accounts: [1234567890, 2345678901]
+    regions:
+    - us-east-1
+
+- name: The same type of update, but wait for the update to complete in all stacks
+  cloudformation_stack_set:
+    name: my-stack
+    state: present
+    wait: true
+    parameters:
+      InstanceName: my_restacked_instance
+    tags:
+      foo: bar
+      test: stack
+    accounts: [1234567890, 2345678901]
+    regions:
+    - us-east-1

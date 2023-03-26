@@ -1,0 +1,14 @@
+- name: Create a new direct connect gateway attached to virtual private gateway
+  dxgw:
+    state: present
+    name: my-dx-gateway
+    amazon_asn: 7224
+    virtual_gateway_id: vpg-12345
+  register: created_dxgw
+
+- name: Create a new unattached dxgw
+  dxgw:
+    state: present
+    name: my-dx-gateway
+    amazon_asn: 7224
+  register: created_dxgw

@@ -1,0 +1,9 @@
+# Create a new repository
+- aws_codecommit:
+    name: repo
+    state: present
+
+# Delete a repository
+- aws_codecommit:
+    name: repo
+    state: absent

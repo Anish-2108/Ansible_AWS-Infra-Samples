@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    state: present
+  tasks:
+- name: My Batch Job Definition
+  batch_job_definition:
+    job_definition_name: My Batch Job Definition
+    state: present
+    type: container
+    parameters:
+      Param1: Val1
+      Param2: Val2
+    image: <Docker Image URL>
+    vcpus: 1
+    memory: 512
+    command:
+      - python
+      - run_my_script.py
+      - arg1
+    job_role_arn: <Job Role ARN>
+    attempts: 3
+  register: job_definition_create_result
+
+- name: show results
+  debug: var=job_definition_create_result

@@ -1,0 +1,57 @@
+# Note: These examples do not set authentication details, see the AWS Guide for details.
+
+# Get a summary of distributions
+- cloudfront_info:
+    summary: true
+  register: result
+
+# Get information about a distribution
+- cloudfront_info:
+    distribution: true
+    distribution_id: my-cloudfront-distribution-id
+  register: result_did
+- debug:
+    msg: "{{ result_did['cloudfront']['my-cloudfront-distribution-id'] }}"
+
+# Get information about a distribution using the CNAME of the cloudfront distribution.
+- cloudfront_info:
+    distribution: true
+    domain_name_alias: www.my-website.com
+  register: result_website
+- debug:
+    msg: "{{ result_website['cloudfront']['www.my-website.com'] }}"
+
+# When the module is called as cloudfront_facts, return values are published
+# in ansible_facts['cloudfront'][<id>] and can be used as follows.
+# Note that this is deprecated and will stop working in Ansible 2.13.
+- cloudfront_facts:
+    distribution: true
+    distribution_id: my-cloudfront-distribution-id
+- debug:
+    msg: "{{ ansible_facts['cloudfront']['my-cloudfront-distribution-id'] }}"
+
+- cloudfront_facts:
+    distribution: true
+    domain_name_alias: www.my-website.com
+- debug:
+    msg: "{{ ansible_facts['cloudfront']['www.my-website.com'] }}"
+
+# Get all information about an invalidation for a distribution.
+- cloudfront_facts:
+    invalidation: true
+    distribution_id: my-cloudfront-distribution-id
+    invalidation_id: my-cloudfront-invalidation-id
+
+# Get all information about a cloudfront origin access identity.
+- cloudfront_facts:
+    origin_access_identity: true
+    origin_access_identity_id: my-cloudfront-origin-access-identity-id
+
+# Get all information about lists not requiring parameters (ie. list_origin_access_identities, list_distributions, list_streaming_distributions)
+- cloudfront_facts:
+    origin_access_identity: true
+    origin_access_identity_id: my-cloudfront-origin-access-identity-id
+
+# Get all information about lists not requiring parameters (ie. list_origin_access_identities, list_distributions, list_streaming_distributions)
+- cloudfront_facts:
+    all_lists: true

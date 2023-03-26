@@ -1,0 +1,47 @@
+- name: Create FileSystem
+  aws_netapp_cvs_FileSystems:
+    state: present
+    region: us-east-1
+    creationToken: newVolume-1
+    exportPolicy:
+        rules:
+          - allowedClients: 172.16.0.4
+            cifs: False
+            nfsv3: True
+            nfsv4: True
+            ruleIndex: 1
+            unixReadOnly: True
+            unixReadWrite: False
+    quotaInBytes: 100000000000
+    api_url : cds-aws-bundles.netapp.com
+    api_key: Q1ZRR0p0VGNuZ3VhMnJBYk5zczM1RkZ3Z0lCbUE3
+    secret_key : U1FwdHdKSGRQQUhIdkIwMktMU1ZCV2x6WUowZWRD
+
+- name: Update FileSystem
+  aws_netapp_cvs_FileSystems:
+     state: present
+     region: us-east-1
+     creationToken: newVolume-1
+     exportPolicy:
+         rules:
+           - allowedClients: 172.16.0.4
+             cifs: False
+             nfsv3: True
+             nfsv4: True
+             ruleIndex: 1
+             unixReadOnly: True
+             unixReadWrite: False
+     quotaInBytes: 200000000000
+     api_url : cds-aws-bundles.netapp.com
+     api_key: Q1ZRR0p0VGNuZ3VhMnJBYk5zczM1RkZ3Z0lCbUE3
+     secret_key : U1FwdHdKSGRQQUhIdkIwMktMU1ZCV2x6WUowZWRD
+
+- name: Delete FileSystem
+  aws_netapp_cvs_FileSystems:
+     state: present
+     region: us-east-1
+     creationToken: newVolume-1
+     quotaInBytes: 100000000000
+     api_url : cds-aws-bundles.netapp.com
+     api_key: Q1ZRR0p0VGNuZ3VhMnJBYk5zczM1RkZ3Z0lCbUE3
+     secret_key : U1FwdHdKSGRQQUhIdkIwMktMU1ZCV2x6WUowZWRD

@@ -1,0 +1,34 @@
+- name: Create Active Directory
+  aws_netapp_cvs_active_directory.py:
+    state: present
+    region: us-east-1
+    DNS: 101.102.103.123
+    domain: mydomain.com
+    password: netapp1!
+    netBIOS: testing
+    username: user1
+    api_url : My_CVS_Hostname
+    api_key: My_API_Key
+    secret_key : My_Secret_Key
+
+- name: Update Active Directory
+  aws_netapp_cvs_active_directory.py:
+    state: present
+    region: us-east-1
+    DNS: 101.102.103.123
+    domain: mydomain.com
+    password: netapp2!
+    netBIOS: testingBIOS
+    username: user2
+    api_url : My_CVS_Hostname
+    api_key: My_API_Key
+    secret_key : My_Secret_Key
+
+- name: Delete Active Directory
+  aws_netapp_cvs_active_directory.py:
+    state: absent
+    region: us-east-1
+    domain: mydomain.com
+    api_url : My_CVS_Hostname
+    api_key: My_API_Key
+    secret_key : My_Secret_Key

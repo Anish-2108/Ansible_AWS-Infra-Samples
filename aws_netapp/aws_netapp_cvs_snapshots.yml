@@ -1,0 +1,29 @@
+- name: Create Snapshot
+  aws_netapp_cvs_snapshots:
+    state: present
+    region: us-east-1
+    name: testSnapshot
+    fileSystemId: testVolume
+    api_url : cds-aws-bundles.netapp.com
+    api_key: myApiKey
+    secret_key : mySecretKey
+
+- name: Update Snapshot
+  aws_netapp_cvs_snapshots:
+    state: present
+    region: us-east-1
+    name: testSnapshot - renamed
+    from_name: testSnapshot
+    fileSystemId: testVolume
+    api_url : cds-aws-bundles.netapp.com
+    api_key: myApiKey
+    secret_key : mySecretKey
+
+- name: Delete Snapshot
+  aws_netapp_cvs_snapshots:
+    state: absent
+    region: us-east-1
+    name: testSnapshot
+    api_url : cds-aws-bundles.netapp.com
+    api_key: myApiKey
+    secret_key : mySecretKey

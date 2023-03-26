@@ -1,0 +1,5 @@
+# Note: These examples do not set authentication details, see the AWS Guide for details.
+
+- name: Get the current caller identity information
+  aws_caller_info:
+  register: caller_info

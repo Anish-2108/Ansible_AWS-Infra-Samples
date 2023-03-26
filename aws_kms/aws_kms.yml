@@ -1,0 +1,46 @@
+# Managing the KMS IAM Policy via policy_mode and policy_grant_types is fragile
+# and has been deprecated in favour of the policy option.
+- name: grant user-style access to production secrets
+  aws_kms:
+  args:
+    alias: "alias/my_production_secrets"
+    policy_mode: grant
+    policy_role_name: "prod-appServerRole-1R5AQG2BSEL6L"
+    policy_grant_types: "role,role grant"
+- name: remove access to production secrets from role
+  aws_kms:
+  args:
+    alias: "alias/my_production_secrets"
+    policy_mode: deny
+    policy_role_name: "prod-appServerRole-1R5AQG2BSEL6L"
+
+# Create a new KMS key
+- aws_kms:
+    alias: mykey
+    tags:
+      Name: myKey
+      Purpose: protect_stuff
+
+# Update previous key with more tags
+- aws_kms:
+    alias: mykey
+    tags:
+      Name: myKey
+      Purpose: protect_stuff
+      Owner: security_team
+
+# Update a known key with grants allowing an instance with the billing-prod IAM profile
+# to decrypt data encrypted with the environment: production, application: billing
+# encryption context
+- aws_kms:
+    key_id: abcd1234-abcd-1234-5678-ef1234567890
+    grants:
+      - name: billing_prod
+        grantee_principal: arn:aws:iam::1234567890123:role/billing_prod
+        constraints:
+          encryption_context_equals:
+            environment: production
+            application: billing
+        operations:
+          - Decrypt
+          - RetireGrant
