@@ -2,9 +2,9 @@
 
 **Using the AWS CLI to Connect Ansible**
 
-sudo apt update sudo apt install 
+sudo apt update 
 
-python3-pip pip3 install awscli
+sudo apt install python3-pip pip3 install awscli
 
 
 **# Once the CLI is installed, run aws configure and enter your AWS access key ID and secret access key.**
