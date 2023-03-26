@@ -10,7 +10,7 @@ aws configure cat .aws/credentials
 
 You can get keys from the Your Security Credentials page in the AWS Management Console. Here's how those keys will look (don't get any naughty ideas, these aren't valid):
 
-AccessKeyId: AKIALNZTQW6H3EFBRLHQ SecretAccessKey: f26B8touguUBELGpdyCyc9o0ZDzP2MEUWNC0JNwA
+**AccessKeyId**: AKIALNZTQW6H3EFBRLHQ **SecretAccessKey**: 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
 
 # We're now ready to install ansible
 pip3 install ansible
@@ -18,12 +18,13 @@ pip3 install ansible
 # I'll confirm that it's properly installed by running 
 ansible --version. ansible --version
 
-# As I mentioned earlier, Ansible will connect to AWS using the boto SDK.
-
+As I mentioned earlier, **Ansible** will connect to AWS using the boto SDK.
 pip3 install boto boto3
 
-First off, I'll use any plain text editor to create a hosts file.
+We also need to define host file in order run aws ansible playbook 
+go to home directory and **cd to ~/.aws** and cat out credentials 
 
+then create the **hosts** file and add the below commands
 [local] localhost
 
-There you Go!
+There you go!
